@@ -1,0 +1,244 @@
+# {{ ansible_managed }}
+print_info() {
+{% for e in neofetch_print_info %}
+{% if e.name == 'prin' %}
+{% if e.content is defined %}
+    {{ e.content }}
+{% else %}
+    prin
+{% endif %}
+{% elif e.name == 'wait' %}
+    wait
+{% elif (e.name == 'title' or e.name == 'underline' or e.name == 'cols') %}
+    info {{ e.name }}
+{% else %}
+    info "{{ e.display_name }}" {{ e.name }} {% if e.async|default('no', true)|bool %}&{% endif %}
+    
+{% endif %}
+{% endfor %}
+}
+{% if neofetch_title_fqdn is defined %}
+title_fqdn="{{ neofetch_title_fqdn }}"
+{% endif %}
+{% if neofetch_kernel_shorthand is defined %}
+kernel_shorthand="{{ neofetch_kernel_shorthand }}"
+{% endif %}
+{% if neofetch_distro_shorthand is defined %}
+distro_shorthand="{{ neofetch_distro_shorthand }}"
+{% endif %}
+{% if neofetch_os_arch is defined %}
+os_arch="{{ neofetch_os_arch }}"
+{% endif %}
+{% if neofetch_uptime_shorthand is defined %}
+uptime_shorthand="{{ neofetch_uptime_shorthand }}"
+{% endif %}
+{% if neofetch_memory_percent is defined %}
+memory_percent="{{ neofetch_memory_percent }}"
+{% endif %}
+{% if neofetch_memory_unit is defined %}
+memory_unit="{{ neofetch_memory_unit }}"
+{% endif %}
+{% if neofetch_package_managers is defined %}
+package_managers="{{ neofetch_package_managers }}"
+{% endif %}
+{% if neofetch_shell_path is defined %}
+shell_path="{{ neofetch_shell_path }}"
+{% endif %}
+{% if neofetch_shell_version is defined %}
+shell_version="{{ neofetch_shell_version }}"
+{% endif %}
+{% if neofetch_speed_type is defined %}
+speed_type="{{ neofetch_speed_type }}"
+{% endif %}
+{% if neofetch_speed_shorthand is defined %}
+speed_shorthand="{{ neofetch_speed_shorthand }}"
+{% endif %}
+{% if neofetch_cpu_brand is defined %}
+cpu_brand="{{ neofetch_cpu_brand }}"
+{% endif %}
+{% if neofetch_cpu_speed is defined %}
+cpu_speed="{{ neofetch_cpu_speed }}"
+{% endif %}
+{% if neofetch_cpu_cores is defined %}
+cpu_cores="{{ neofetch_cpu_cores }}"
+{% endif %}
+{% if neofetch_cpu_temp is defined %}
+cpu_temp="{{ neofetch_cpu_temp }}"
+{% endif %}
+{% if neofetch_gpu_brand is defined %}
+gpu_brand="{{ neofetch_gpu_brand }}"
+{% endif %}
+{% if neofetch_gpu_type is defined %}
+gpu_type="{{ neofetch_gpu_type }}"
+{% endif %}
+{% if neofetch_refresh_rate is defined %}
+refresh_rate="{{ neofetch_refresh_rate }}"
+{% endif %}
+{% if neofetch_gtk_shorthand is defined %}
+gtk_shorthand="{{ neofetch_gtk_shorthand }}"
+{% endif %}
+{% if neofetch_gtk2 is defined %}
+gtk2="{{ neofetch_gtk2 }}"
+{% endif %}
+{% if neofetch_gtk3 is defined %}
+gtk3="{{ neofetch_gtk3 }}"
+{% endif %}
+{% if neofetch_public_ip_host is defined %}
+public_ip_host="{{ neofetch_public_ip_host }}"
+{% endif %}
+{% if neofetch_public_ip_timeout is defined %}
+public_ip_timeout="{{ neofetch_public_ip_timeout }}"
+{% endif %}
+{% if neofetch_de_version is defined %}
+de_version="{{ neofetch_de_version }}"
+{% endif %}
+{% if neofetch_local_ip_interface is defined %}
+local_ip_interface=(
+{% for ip in neofetch_local_ip_interface %}
+    '{{ ip }}'
+{% endfor %}
+)
+{% endif %}
+{% if neofetch_disk_show is defined %}
+disk_show=(
+{% for d in neofetch_disk_show %}
+    '{{ d }}'
+{% endfor %}
+)
+{% endif %}
+{% if neofetch_disk_subtitle is defined %}
+disk_subtitle="{{ neofetch_disk_subtitle }}"
+{% endif %}
+{% if neofetch_disk_percent is defined %}
+disk_percent="{{ neofetch_disk_percent }}"
+{% endif %}
+{% if neofetch_music_player is defined %}
+music_player="{{ neofetch_music_player }}"
+{% endif %}
+{% if neofetch_song_format is defined %}
+song_format="{{ neofetch_song_format }}"
+{% endif %}
+{% if neofetch_song_shorthand is defined %}
+song_shorthand="{{ neofetch_song_shorthand }}"
+{% endif %}
+{% if neofetch_mpc_args is defined %}
+mpc_args=({{ neofetch_mpc_args }})
+{% endif %}
+{% if neofetch_colors is defined %}
+{% if (neofetch_colors.distro|default('yes')|bool) %}
+colors=(distro)
+{% else %}
+colors=(
+    {{ neofetch_colors.title|default("") }}
+    {{ neofetch_colors.at|default("") }}
+    {{ neofetch_colors.underline|default("") }}
+    {{ neofetch_colors.subtitle|default("") }}
+    {{ neofetch_colors.colon|default("") }}
+    {{ neofetch_colors.info|default("") }}
+)
+{% endif %}
+{% endif %}
+{% if neofetch_bold is defined %}
+bold="{{ neofetch_bold }}"
+{% endif %}
+{% if neofetch_underline_enabled is defined %}
+underline_enabled="{{ neofetch_underline_enabled }}"
+{% endif %}
+{% if neofetch_underline_char is defined %}
+underline_char="{{ neofetch_underline_char }}"
+{% endif %}
+{% if neofetch_separator is defined %}
+separator="{{ neofetch_separator }}"
+{% endif %}
+block_range=({{ neofetch_block_range_start }} {{ neofetch_block_range_end }})
+{% if neofetch_color_blocks is defined %}
+color_blocks="{{ neofetch_color_blocks }}"
+{% endif %}
+{% if neofetch_block_width is defined %}
+block_width="{{ neofetch_block_width }}"
+{% endif %}
+{% if neofetch_block_height is defined %}
+block_height="{{ neofetch_block_height }}"
+{% endif %}
+{% if neofetch_col_offset is defined %}
+col_offset="{{ neofetch_col_offset }}"
+{% endif %}
+{% if neofetch_bar_char_elapsed is defined %}
+bar_char_elapsed="{{ neofetch_bar_char_elapsed }}"
+{% endif %}
+{% if neofetch_bar_char_total is defined %}
+bar_char_total="{{ neofetch_bar_char_total }}"
+{% endif %}
+{% if neofetch_bar_border is defined %}
+bar_border="{{ neofetch_bar_border }}"
+{% endif %}
+{% if neofetch_bar_length is defined %}
+bar_length="{{ neofetch_bar_length }}"
+{% endif %}
+{% if neofetch_bar_color_elapsed is defined %}
+bar_color_elapsed="{{ neofetch_bar_color_elapsed }}"
+{% endif %}
+{% if neofetch_bar_color_total is defined %}
+bar_color_total="{{ neofetch_bar_color_total }}"
+{% endif %}
+{% if neofetch_cpu_display is defined %}
+cpu_display="{{ neofetch_cpu_display }}"
+{% endif %}
+{% if neofetch_memory_display is defined %}
+memory_display="{{ neofetch_memory_display }}"
+{% endif %}
+{% if neofetch_battery_display is defined %}
+battery_display="{{ neofetch_battery_display }}"
+{% endif %}
+{% if neofetch_disk_display is defined %}
+disk_display="{{ neofetch_disk_display }}"
+{% endif %}
+{% if neofetch_image_backend is defined %}
+image_backend="{{ neofetch_image_backend }}"
+{% endif %}
+{% if neofetch_image_source is defined %}
+image_source="{{ neofetch_image_source }}"
+{% endif %}
+{% if neofetch_ascii_distro is defined %}
+ascii_distro="{{ neofetch_ascii_distro }}"
+{% endif %}
+{% if neofetch_ascii_colors is defined %}
+ascii_colors=(
+{% for c in neofetch_ascii_colors %}
+    {{ c }}
+{% endfor %}
+)
+{% endif %}
+{% if neofetch_ascii_bold is defined %}
+ascii_bold="{{ neofetch_ascii_bold }}"
+{% endif %}
+{% if neofetch_image_loop is defined %}
+image_loop="{{ neofetch_image_loop }}"
+{% endif %}
+{% if neofetch_thumbnail_dir is defined %}
+thumbnail_dir="{{ neofetch_thumbnail_dir }}"
+{% endif %}
+{% if neofetch_crop_mode is defined %}
+crop_mode="{{ neofetch_crop_mode }}"
+{% endif %}
+{% if neofetch_crop_offset is defined %}
+crop_offset="{{ neofetch_crop_offset }}"
+{% endif %}
+{% if neofetch_image_size is defined %}
+image_size="{{ neofetch_image_size }}"
+{% endif %}
+{% if neofetch_gap is defined %}
+gap="{{ neofetch_gap }}"
+{% endif %}
+{% if neofetch_yoffset is defined %}
+yoffset="{{ neofetch_yoffset }}"
+{% endif %}
+{% if neofetch_xoffset is defined %}
+xoffset="{{ neofetch_xoffset }}"
+{% endif %}
+{% if neofetch_background_color is defined %}
+background_color="{{ neofetch_background_color }}"
+{% endif %}
+{% if neofetch_stdout is defined %}
+stdout="{{ neofetch_stdout }}"
+{% endif %}

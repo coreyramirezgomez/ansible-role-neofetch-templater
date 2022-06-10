@@ -1,0 +1,17 @@
+---
+- name: Ensure neofetch global directory exists
+  file:
+    state: directory
+    recurse: true
+    path: "{{ neofetch_global_config_path }}"
+    mode: 0755
+  when: neofetch_write_global_config
+  become: true
+
+- name: Deploy global neofetch configuration
+  template:
+    src: "config.conf.j2"
+    dest: "{{ neofetch_global_config_path }}/{{ neofetch_global_config_file }}"
+    mode: 0644
+  when: neofetch_write_global_config
+  become: true

@@ -1,0 +1,11 @@
+---
+dependencies: []
+galaxy_info:
+  author: Corey Ramirez-Gomez
+  description: Configure and deploy Neofetch configurations with ansible.
+  license: MIT
+  min_ansible_version: 2.1
+  platforms: all
+  galaxy_tags:
+    - neofetch
+    - terminal

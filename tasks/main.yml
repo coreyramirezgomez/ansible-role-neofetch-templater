@@ -1,0 +1,47 @@
+---
+# tasks file for ansible-role-neofetch
+- name: Determine neofetch ownership variables
+  set_fact:
+    neofetch_user: "{{ neofetch_user | default(ansible_user_id) }}"
+    neofetch_group: "{{ neofetch_group | default(ansible_user_gid) }}"
+- name: include os specific tasks
+  include_tasks: "{{ os_specifc_task_file }}"
+  with_first_found:
+    - "{{ ansible_distribution|lower }}.yml"
+    - "default.yml"
+  loop_control:
+    loop_var: "os_specifc_task_file"
+- name: Ensure neofetch user directory exists
+  file:
+    state: directory
+    recurse: yes
+    path: "{{ neofetch_user_config_path }}"
+    owner: "{{ neofetch_user }}"
+    group: "{{ neofetch_group }}"
+    mode: 0755
+  when: neofetch_write_user_config
+- name: Deploy user neofetch configuration
+  template:
+    src: "config.conf.j2"
+    dest: "{{ neofetch_user_config_path }}/{{ neofetch_user_config_file }}"
+    mode: 0644
+  when: neofetch_write_user_config
+- name: Deploy neofetch_image
+  copy:
+    src: "{{ neofetch_image }}"
+    dest: "{{ neofetch_user_config_path }}/{{ neofetch_image | basename }}"
+    mode: 0644
+  when: neofetch_image is defined
+- name: Register neofetch command for shell configs
+  set_fact:
+    neofetch_shell_command: "{{ neofetch_binary_path }} --config {{ neofetch_user_config_path }}/{{ neofetch_user_config_file }}"
+- name: Add neofetch command to shell configs
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/{{ item }}"
+    line: "{{ neofetch_shell_command }}"
+    owner: "{{ neofetch_user }}"
+    group: "{{ neofetch_group }}"
+  with_items:
+    - ".zshrc"
+    - ".bashrc"
+  when: neofetch_add_shell_command

@@ -5,7 +5,16 @@ galaxy_info:
   description: Configure and deploy Neofetch configurations with ansible.
   license: MIT
   min_ansible_version: 2.1
-  platforms: all
+  platforms:
+    - name: GenericLinux
+      versions:
+        - all
+    - name: MacOSX
+      versions:
+        - all
+    - name: macOS
+      versions:
+        - all
   galaxy_tags:
     - neofetch
     - terminal
